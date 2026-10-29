@@ -102,6 +102,8 @@ python -m app.worker                                          # 终端 2
 
 ## 架构
 
+![架构图](docs/images/architecture.svg)
+
 ```
 nginx :80
    └── app (FastAPI)  :8000

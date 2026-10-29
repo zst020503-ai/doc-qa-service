@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" width="900" height="400" role="img" aria-label="doc-qa-service 架构图">
+  <title>doc-qa-service 架构</title>
+  <desc>客户端经 nginx 进入 FastAPI 应用，应用按路由、业务、数据三层划分，读写 PostgreSQL + pgvector；worker 通过行锁轮询领取解析任务。</desc>
+
+  <rect width="900" height="400" fill="#ffffff"/>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#5a5a5a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="34" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#1f2328">doc-qa-service 运行架构</text>
+  <text x="40" y="56" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#656d76">四个容器，一条命令起全套</text>
+
+  <rect x="40" y="150" width="120" height="56" rx="8" fill="#f6f8fa" stroke="#d0d7de"/>
+  <text x="100" y="174" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#1f2328">客户端</text>
+  <text x="100" y="192" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#656d76">浏览器 / curl</text>
+
+  <rect x="200" y="150" width="120" height="56" rx="8" fill="#eef4ff" stroke="#4a7ec8"/>
+  <text x="260" y="174" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#1b3f6e">nginx</text>
+  <text x="260" y="192" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#4a7ec8">:80 反向代理</text>
+
+  <rect x="370" y="96" width="210" height="164" rx="10" fill="#f6f8fa" stroke="#d0d7de"/>
+  <text x="475" y="118" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1f2328">app · FastAPI :8000</text>
+
+  <rect x="386" y="130" width="178" height="34" rx="6" fill="#ffffff" stroke="#c9d1d9"/>
+  <text x="475" y="152" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#1f2328">api/v1 · 路由层</text>
+
+  <rect x="386" y="170" width="178" height="34" rx="6" fill="#ffffff" stroke="#c9d1d9"/>
+  <text x="475" y="192" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#1f2328">services · 业务层</text>
+
+  <rect x="386" y="210" width="178" height="34" rx="6" fill="#ffffff" stroke="#c9d1d9"/>
+  <text x="475" y="232" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#1f2328">repositories · 数据层</text>
+
+  <rect x="660" y="120" width="200" height="92" rx="8" fill="#eaf6ee" stroke="#3f8f5a"/>
+  <text x="760" y="148" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#1d4d2e">PostgreSQL 16</text>
+  <text x="760" y="168" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#3f8f5a">users / documents / chunks</text>
+  <text x="760" y="190" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#3f8f5a">pgvector + hnsw 索引</text>
+
+  <rect x="370" y="300" width="210" height="60" rx="8" fill="#fdf3e6" stroke="#c58a3d"/>
+  <text x="475" y="324" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#7a4d12">worker</text>
+  <text x="475" y="342" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#c58a3d">解析 · 切分 · 向量化</text>
+
+  <path d="M160 178 L200 178" fill="none" stroke="#5a5a5a" stroke-width="1.4" marker-end="url(#a)"/>
+  <path d="M320 178 L370 178" fill="none" stroke="#5a5a5a" stroke-width="1.4" marker-end="url(#a)"/>
+  <path d="M580 172 L660 166" fill="none" stroke="#5a5a5a" stroke-width="1.4" marker-end="url(#a)"/>
+  <text x="620" y="158" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#656d76">SQL</text>
+
+  <path d="M580 332 L760 332 L760 212" fill="none" stroke="#c58a3d" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#a)"/>
+  <text x="668" y="350" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#c58a3d">轮询 pending，FOR UPDATE SKIP LOCKED</text>
+
+  <text x="40" y="380" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#656d76">上传接口只落盘并写入 pending 记录后立即返回 202，解析与向量化由 worker 异步完成，前端轮询文档状态。</text>
+</svg>
