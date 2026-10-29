@@ -1,0 +1,20 @@
+{"id": 1, "question": "年假有几天？", "expect_keywords": ["年假", "5 天"], "should_answer": true}
+{"id": 2, "question": "报销需要多久内提交？", "expect_keywords": ["10 个工作日"], "should_answer": true}
+{"id": 3, "question": "出差的住宿标准是多少？", "expect_keywords": ["住宿", "500"], "should_answer": true}
+{"id": 4, "question": "迟到几次会扣绩效？", "expect_keywords": ["迟到", "3 次"], "should_answer": true}
+{"id": 5, "question": "离职需要提前多久通知？", "expect_keywords": ["30 天"], "should_answer": true}
+{"id": 6, "question": "支持上传哪些文件格式？", "expect_keywords": ["PDF", "Markdown"], "should_answer": true}
+{"id": 7, "question": "支持离线部署吗？", "expect_keywords": ["离线", "镜像"], "should_answer": true}
+{"id": 8, "question": "最低硬件要求是什么？", "expect_keywords": ["8G"], "should_answer": true}
+{"id": 9, "question": "首次部署大概需要多长时间？", "expect_keywords": ["15 分钟"], "should_answer": true}
+{"id": 10, "question": "基础版一年多少钱？", "expect_keywords": ["2 万"], "should_answer": true}
+{"id": 11, "question": "VPN 账号有效期多久？", "expect_keywords": ["90 天"], "should_answer": true}
+{"id": 12, "question": "病假期间工资怎么发？", "expect_keywords": ["80%"], "should_answer": true}
+{"id": 13, "question": "扫描版 PDF 能解析吗？", "expect_keywords": ["扫描"], "should_answer": true}
+{"id": 14, "question": "文档上传后多久能被检索到？", "expect_keywords": ["10 秒"], "should_answer": true}
+{"id": 15, "question": "陪产假多少天？", "expect_keywords": ["15 天"], "should_answer": true}
+{"id": 16, "question": "发票多久能开出来？", "expect_keywords": ["发票", "5 个工作日"], "should_answer": true}
+{"id": 17, "question": "公司股票什么时候上市？", "expect_keywords": [], "should_answer": false}
+{"id": 18, "question": "员工食堂几点开饭？", "expect_keywords": [], "should_answer": false}
+{"id": 19, "question": "你们支持钉钉集成吗？", "expect_keywords": [], "should_answer": false}
+{"id": 20, "question": "年终奖怎么计算？", "expect_keywords": [], "should_answer": false}
