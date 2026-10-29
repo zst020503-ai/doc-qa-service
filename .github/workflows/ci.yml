@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: 冒烟测试
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 冒烟测试（不需要数据库）
+        run: python scripts/smoke_test.py
+        env:
+          DATABASE_URL: postgresql+psycopg2://docqa:docqa@127.0.0.1:5432/docqa
+
+      - name: 校验 compose 文件
+        run: docker compose config -q
+
+  integration:
+    name: 端到端（真实 PostgreSQL + pgvector）
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      db:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: docqa
+          POSTGRES_PASSWORD: docqa
+          POSTGRES_DB: docqa
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U docqa -d docqa"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+
+    env:
+      DATABASE_URL: postgresql+psycopg2://docqa:docqa@127.0.0.1:5432/docqa
+      UPLOAD_DIR: /tmp/uploads
+      JWT_SECRET: ci-only-not-a-real-secret
+      EMBEDDING_PROVIDER: mock
+      LLM_PROVIDER: mock
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 启动应用与 worker，跑 20 题评测
+        run: |
+          python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 > uvicorn.log 2>&1 &
+          python -m app.worker > worker.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8000/healthz > /dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8000/readyz
+          python scripts/eval_qa.py --base-url http://127.0.0.1:8000 \
+            --max-hallucination 1.0 --report eval-report.md
+
+      - name: 失败时输出日志
+        if: failure()
+        run: |
+          echo "===== uvicorn ====="; tail -50 uvicorn.log || true
+          echo "===== worker ====="; tail -50 worker.log || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-report
+          path: eval-report.md
+          if-no-files-found: ignore

@@ -169,6 +169,12 @@ def main() -> int:
     parser.add_argument("--base-url", default="http://localhost")
     parser.add_argument("--top-k", type=int, default=None)
     parser.add_argument("--report", default=None, help="把 markdown 结果写到文件")
+    parser.add_argument(
+        "--max-hallucination",
+        type=float,
+        default=0.10,
+        help="编造率超过此值返回非 0；CI 里只验证链路时传 1.0",
+    )
     parser.add_argument("--skip-upload", action="store_true")
     args = parser.parse_args()
 
@@ -194,7 +200,7 @@ def main() -> int:
         Path(args.report).write_text(report, encoding="utf-8")
         print(f"\n报告已写入 {args.report}")
 
-    return 0 if summary["hallucination_rate"] <= 0.1 else 1
+    return 0 if summary["hallucination_rate"] <= args.max_hallucination else 1
 
 
 if __name__ == "__main__":
