@@ -9,4 +9,4 @@ data/
 .idea/
 .vscode/
 release-*/
-eval-report.md
+/eval-report.md
