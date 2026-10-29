@@ -31,7 +31,9 @@ jobs:
           DATABASE_URL: postgresql+psycopg2://docqa:docqa@127.0.0.1:5432/docqa
 
       - name: 校验 compose 文件
-        run: docker compose config -q
+        run: |
+          cp .env.example .env
+          docker compose config -q
 
   integration:
     name: 端到端（真实 PostgreSQL + pgvector）
