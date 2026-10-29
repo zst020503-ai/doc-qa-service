@@ -6,9 +6,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Docker](https://img.shields.io/badge/docker-compose-2496ED)
 
-<!-- 推到 GitHub 后：把下面两行的 OWNER 换成你的用户名，然后删掉这行注释和下一行的注释符号
-[![CI](https://github.com/OWNER/doc-qa-service/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/doc-qa-service/actions)
--->
+[![CI](https://github.com/zst020503-ai/doc-qa-service/actions/workflows/ci.yml/badge.svg)](https://github.com/zst020503-ai/doc-qa-service/actions)
 
 ## 它和常见 RAG demo 的区别
 
