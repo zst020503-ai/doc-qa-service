@@ -48,7 +48,7 @@
   <text x="620" y="158" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#656d76">SQL</text>
 
   <path d="M580 332 L760 332 L760 212" fill="none" stroke="#c58a3d" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#a)"/>
-  <text x="668" y="350" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#c58a3d">轮询 pending，FOR UPDATE SKIP LOCKED</text>
+  <text x="590" y="352" text-anchor="start" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#c58a3d">轮询 pending + SKIP LOCKED</text>
 
   <text x="40" y="380" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#656d76">上传接口只落盘并写入 pending 记录后立即返回 202，解析与向量化由 worker 异步完成，前端轮询文档状态。</text>
 </svg>
